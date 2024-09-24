@@ -27,7 +27,7 @@ return [
     */
 
     'controllers' => [
-        'namespace' => 'TCG\\Voyager\\Http\\Controllers',
+        'namespace' => 'App\\Http\\Controllers\\Voyager',
     ],
 
     /*
@@ -193,6 +193,8 @@ return [
     'additional_js' => [
         //'js/custom.js',
     ],
+
+    'assets_path' => '/resources/assets',
 
     'googlemaps' => [
         'key'    => env('GOOGLE_MAPS_KEY', ''),
