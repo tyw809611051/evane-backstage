@@ -63,7 +63,7 @@ class ReptileController extends Controller
 
             $itemStatisticsList = $resultBody['item_statistics'];
             foreach ($itemStatisticsList as $item) {
-                $data[] = [
+                $data = [
                     'average_play_duration' => $item['average_play_duration'], // 平均播放时长：9
                     'bounce_rate_2s' => $item['bounce_rate_2s'], // 2m跳出率：0.4117647058823529
                     'comment_count' => $item['comment_count'], // 评论数:0
@@ -74,9 +74,9 @@ class ReptileController extends Controller
                     'share_count' => $item['share_count'], // 分享数：0
                     'title' => $item['title'], // 标题
                 ];
+                DB::table('dy_item')->insert($data);
             }
 
-            DB::table('dy_item')->insert($data);
         } catch (RequestException $e) {
             // 处理请求异常
             echo "Error: " . $e->getMessage() . "\n";
