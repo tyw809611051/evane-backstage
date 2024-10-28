@@ -194,7 +194,6 @@ return [
         //'js/custom.js',
     ],
 
-    'assets_path' => '/resources/assets',
 
     'googlemaps' => [
         'key'    => env('GOOGLE_MAPS_KEY', ''),

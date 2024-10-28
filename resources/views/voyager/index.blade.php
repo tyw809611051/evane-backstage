@@ -18,7 +18,7 @@
 
             <div class="Dashboard Dashboard--full" id="analytics-dashboard">
                 <header class="Dashboard-header">
-                    <ul class="FlexGrid">
+                    <ul class="FlexGrid">11111
                         <li class="FlexGrid-item">
                             <div class="Titles">
                                 <h1 class="Titles-main" id="view-name">{{ __('voyager::analytics.select_view') }}</h1>

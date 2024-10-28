@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Voyager;
 
+use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Exception\WebDriverException;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -16,7 +20,27 @@ class VoyagerController extends Controller
 {
     public function index()
     {
-        return Voyager::view('voyager::index');
+	/*
+        try {
+            $host = 'http://localhost:4444';
+            $capabilities = DesiredCapabilities::chrome();
+            $options = new ChromeOptions();
+	    $options->addArguments(['--headless']);
+	    $options->addArguments(['--disable-dev-shm-usage']);
+            $options->addArguments(['--no-sandbox']);
+            $options->addArguments(['--disable-gpu']);
+            $capabilities->setCapability(ChromeOptions::CAPABILITY,$options);
+            $driver = RemoteWebDriver::create($host,$capabilities);
+		$driver->get('https://creator.douyin.com/');
+		$title = $driver->getTitle();
+            var_dump($title);die;
+        } catch (WebDriverException $e) {
+            echo 1111;
+            var_dump($e->getMessage());
+        }
+        die;
+	*/
+	return Voyager::view('voyager::index');
     }
 
     public function logout()
@@ -83,7 +107,7 @@ class VoyagerController extends Controller
     public function assets(Request $request)
     {
         try {
-            $path = dirname(__DIR__, 3).'/publishable/assets/'.Util::normalizeRelativePath(urldecode($request->path));
+            $path = dirname(__DIR__, 4).'/resources/publishable/assets/'.Util::normalizeRelativePath(urldecode($request->path));
         } catch (\LogicException $e) {
             abort(404);
         }
