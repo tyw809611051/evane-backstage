@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\DB;
 
 class ReptileController extends Controller
 {
@@ -51,10 +52,31 @@ class ReptileController extends Controller
 
             // 获取响应体
             $body = $response->getBody()->getContents();
+            $resultBody = json_decode($body,true);
 
             // 输出响应内容
             echo "Response Status: " . $statusCode . "\n";
             echo "Response Body: " . $body . "\n";
+            if ($statusCode != 200 || $resultBody['status_code'] != 0) {
+                throw new RequestException('Response fail. Status:'.$statusCode.' Body:'.$body);
+            }
+
+            $itemStatisticsList = $resultBody['item_statistics'];
+            foreach ($itemStatisticsList as $item) {
+                $data[] = [
+                    'average_play_duration' => $item['average_play_duration'], // 平均播放时长：9
+                    'bounce_rate_2s' => $item['bounce_rate_2s'], // 2m跳出率：0.4117647058823529
+                    'comment_count' => $item['comment_count'], // 评论数:0
+                    'completion_rate_5s' => $item['completion_rate_5s'], // 5s完播率:0.35294117647058826
+                    'like_count' =>$item['like_count'], // 点赞数:1
+                    'play_count'=>$item['play_count'], // 播放数：16
+                    'play_percentage' => $item['play_percentage'], // 播放率:1.1428571428571428
+                    'share_count' => $item['share_count'], // 分享数：0
+                    'title' => $item['title'], // 标题
+                ];
+            }
+
+            DB::table('dy_item')->insert($data);
         } catch (RequestException $e) {
             // 处理请求异常
             echo "Error: " . $e->getMessage() . "\n";
